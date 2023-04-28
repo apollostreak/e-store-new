@@ -9,8 +9,8 @@ import Checkout from './Components/Checkout';
 import Basket from './Components/Basket';
 
 const router = createBrowserRouter([
-  { path:'/', element: (<App/>) },
-  { path:'products/:productsId', element:(<ProductDetails/>) },
+  { path:'/', element: (<App />) },
+  { path:'products/:productsId', element:(<ProductDetails />) },
   { path:'basket', element:(<Basket />) },
   { path:'checkout', element:(<Checkout />) }
 ]);

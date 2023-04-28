@@ -70,9 +70,9 @@ function App() {
       </section>
       <footer>Footer</footer>
     
-      <div className="App">
+      {/* <div className="App">
         
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }
