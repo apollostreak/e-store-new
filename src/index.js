@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider, Route, Link, } from "react-router-dom";
+import ProductDetails from './Components/ProductDetails';
+import Checkout from './Components/Checkout';
+import Basket from './Components/Basket';
+
+const router = createBrowserRouter([
+  { path:'/', element: (<App/>) },
+  { path:'products/:productsId', element:(<ProductDetails/>) },
+  { path:'basket', element:(<Basket />) },
+  { path:'checkout', element:(<Checkout />) }
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
