@@ -7,7 +7,7 @@ const Category_Product = ({id, title,image,specs,features,price,stock}) => {
     const navigate = useNavigate();
 
   return (
-    <main>
+    <article>
         <div className='category-product-title'>
             <Link to={`products/${id}`}>{title}</Link>
         </div>
@@ -44,15 +44,15 @@ const Category_Product = ({id, title,image,specs,features,price,stock}) => {
             </div>
 
             <div className='category-product-info-stock'>
-                <label>Stock Level: {stock}</label>
-                <label>Free Delivery</label>
+                <label>Stock Level: {stock} </label>
+                <label>***Free Delivery***</label>
             </div>
             <div className='category-product-action'>
                 <button onClick={() => navigate(`products/${id}`)}>View Products</button>
                 <button>Add to Basket</button>
             </div>
         </aside>
-    </main>
+    </article>
   )
 }
 

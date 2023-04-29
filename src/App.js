@@ -54,25 +54,27 @@ function App() {
         <Category_Product key={d.id} {...d}>{d.title}</Category_Product>
       );
   }
+
   return (
     <React.Fragment>
+
       <header>My Store</header>
+
       <section>
         <nav>
           {categories.errorMessage && <div>Error:{categories.errorMessage}</div>}
           {categories.data && renderCategories()}
         </nav>
+
         <article>
           <h1>Products</h1>
           {products.errorMessage && <div>Error:{products.errorMessage}</div>}
           {products.data && renderProducts()}
         </article>
       </section>
+
       <footer>Footer</footer>
-    
-      {/* <div className="App">
-        
-      </div> */}
+
     </React.Fragment>
   );
 }
