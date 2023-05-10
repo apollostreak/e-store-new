@@ -1,13 +1,20 @@
-import './App.css';
 import React, { useState } from 'react';
-import Category from './Components/Category';
-import Category_Product from './Components/Category_Product';
+import './App.css';
 import { getCategories, getProducts } from './fetcher';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProductDetails from './Components/ProductDetails';
+import Checkout from './Components/Checkout';
+import Basket from './Components/Basket';
+import Category from './Components/Category';
+import Layout from './Components/Layout';
+import Home from './Components/Home';
+import OrderConfirmation from './Components/OrderConfirmation';
+import SearchResults from './Components/SearchResults';
 
 function App() {
   //get the result from the json file
   const [categories, setCategories] = useState({errorMessage:'',data:[]});
-  const [products, setProducts] = useState({errorMessage:'',data:[]});
+  // const [products, setProducts] = useState({errorMessage:'',data:[]});
   
   //usage of fetch API to get data from the json server to pull some dummy data
   React.useEffect(()=>{
@@ -17,65 +24,40 @@ function App() {
       setCategories(responseObject);
     }
     fetchData();
-  },[]) // the [] is done in order to perform fetch only once
+  },[]); // the [] is done in order to perform fetch only once
 
-  const handleCategoryClick = id => {
+  // const handleCategoryClick = id => {
     
-    const fetchData = async() => {
-      const responseObject = await getProducts(id);
-      setProducts(responseObject);
-    }
-    fetchData();
+  //   const fetchData = async() => {
+  //     const responseObject = await getProducts(id);
+  //     setProducts(responseObject);
+  //   }
+  //   fetchData();
 
-    // fetch('http://localhost:3001/products?catId='+id)
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log(data);
-    //   setProducts(data);
-    // });
-  }
+  //   // fetch('http://localhost:3001/products?catId='+id)
+  //   // .then(response => response.json())
+  //   // .then(data => {
+  //   //   console.log(data);
+  //   //   setProducts(data);
+  //   // });
+  // }
 
-  const renderCategories = () => {
-    //traverse through array and get the title of the categories
-    return categories.data.map(c => 
-        //key is required below in order to loop through the dynamic data
-        <Category key = {c.id} id = {c.id} title = {c.title} onCategoryClick = {() => handleCategoryClick(c.id)}></Category>
-      );
-
-    //alternate to map
-    // const categories = [];
-    // for(let i = 0; i <= result.length; i++){
-    //   categories.push(<Category key = {result[i].id} id = {result[i].id} title = {result[i].title}></Category>);
-    // }
-  }
-
-  const renderProducts = () => {
-    return products.data.map(d => 
-        <Category_Product key={d.id} {...d}>{d.title}</Category_Product>
-      );
-  }
+  const router = createBrowserRouter([
+    { path:'/', element: (<Layout categories={categories}/>), children:[
+      { index: true, element:(<Home />) },
+      { path:'basket', element:(<Basket />) },
+      { path:'checkout', element:(<Checkout />) },
+      { path:'orderconfirm', element:(<OrderConfirmation />) },
+      { path:'search', element:(<SearchResults />)},
+      { path:'categories/:categoryId', element:(<Category />)},
+      { path:'products/:productsId', element:(<ProductDetails />) }
+    ]}
+  ]);
 
   return (
-    <React.Fragment>
-
-      <header>My Store</header>
-
-      <section>
-        <nav>
-          {categories.errorMessage && <div>Error:{categories.errorMessage}</div>}
-          {categories.data && renderCategories()}
-        </nav>
-
-        <article>
-          <h1>Products</h1>
-          {products.errorMessage && <div>Error:{products.errorMessage}</div>}
-          {products.data && renderProducts()}
-        </article>
-      </section>
-
-      <footer>Footer</footer>
-
-    </React.Fragment>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
